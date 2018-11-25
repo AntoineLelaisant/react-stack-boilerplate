@@ -1,0 +1,29 @@
+---
+version: '3.7'
+
+services:
+  front:
+    user: 1000:1000
+    environment:
+      - 'GRAPQHL_URI=${GRAPHQL_URI}'
+    volumes:
+      - './apps/front:/usr/src/app'
+    ports:
+      - '${FRONT_PORT}:3000'
+    command: 'npm start'
+
+  graphql:
+    user: 1000:1000
+    environment:
+      - 'GRAPHQL_PORT=${GRAPHQL_PORT}'
+      - 'MONGO_HOST=${MONGO_HOST}'
+      - 'MONGO_PORT=${MONGO_PORT}'
+    volumes:
+      - './apps/graphql:/usr/src/app'
+    ports:
+      - '${GRAPHQL_PORT}:${GRAPHQL_PORT}'
+    command: 'npm start'
+
+  mongo:
+    ports:
+      - '${MONGO_PORT}:27017'
